@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 
 export default function App() {
-  const [url, setURL] = useState();
+  const [url, setURL] = useState<any>('');
+  const [audioBase64, setAudioBase64] = useState<any>('');
   const recorderControls = useAudioRecorder(
     {
       noiseSuppression: true,
@@ -14,12 +15,14 @@ export default function App() {
   const reader = new FileReader();
 
   const addAudioElement = (blob: any) => {
-    setURL(blob);
-    reader.readAsDataURL(blob);
+    setURL(blob); // save blob
 
+    // base64 conversion
+    reader.readAsDataURL(blob);
     reader.onloadend = function () {
       var base64data = reader.result;
       console.log(base64data);
+      setAudioBase64(base64data); // save base64
     };
 
     const url = URL.createObjectURL(blob);
