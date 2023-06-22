@@ -54,7 +54,7 @@ export default function App() {
       recorderControls.stopRecording();
     }
     return () => {
-      recorderControls.recordingTime;
+      recorderControls.stopRecording();
     };
   }, [recorderControls.recordingTime]);
 
