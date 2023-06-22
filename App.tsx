@@ -29,6 +29,7 @@ export default function App() {
       setAudioBase64(base64data); // save base64
     };
 
+    // comment the below 5 lines of code
     const url = URL.createObjectURL(blob);
     const audio = document.createElement('audio');
     audio.src = url;
