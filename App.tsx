@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
+// axios
+import axios from 'axios';
 
 export default function App() {
-  const [url, setURL] = useState<any>('');
+  const [url, setURL] = useState();
   const [audioBase64, setAudioBase64] = useState<any>('');
+
   const recorderControls = useAudioRecorder(
     {
       noiseSuppression: true,
@@ -12,6 +15,7 @@ export default function App() {
     },
     (err) => console.table(err) // onNotAllowedOrFound
   );
+
   const reader = new FileReader();
 
   const addAudioElement = (blob: any) => {
@@ -32,17 +36,46 @@ export default function App() {
     document.body.appendChild(audio);
   };
 
+  // useEffect(() => {
+  //   let aa = recorderControls.recordingTime;
+  //   if (aa == 5) {
+  //     myInput.current?.focus();
+  //     recorderControls.mediaRecorder;
+  //   } else {
+  //     console.log('still working', recorderControls.recordingTime);
+  //   }
+  // }, [recorderControls.recordingTime]);
+  const [timmer, setTimmer] = useState(0);
+
+  useEffect(() => {
+    setTimmer(recorderControls.recordingTime);
+    if (timmer == 5) {
+      console.log('stop here');
+      recorderControls.stopRecording();
+    }
+    return () => {
+      recorderControls.recordingTime;
+    };
+  }, [recorderControls.recordingTime]);
+
   return (
     <div>
-      <AudioRecorder
-        onRecordingComplete={(blob) => addAudioElement(blob)}
-        recorderControls={recorderControls}
-        // downloadOnSavePress={true}
-        // downloadFileExtension="mp3"
-        showVisualizer={true}
-      />
+      --{timmer}--
+      <div style={{ display: 'none' }}>
+        <AudioRecorder
+          onRecordingComplete={(blob) => addAudioElement(blob)}
+          recorderControls={recorderControls}
+          // downloadOnSavePress={true}
+          // downloadFileExtension="mp3"
+          showVisualizer={true}
+        />
+      </div>
       <br />
-      <button onClick={recorderControls.stopRecording}>Stop recording</button>
+      <button onClick={recorderControls.startRecording}>Start Recording</button>
+      <br />
+      <br />
+      <button onClick={recorderControls.stopRecording}>Stop Recording</button>
+      <span>{recorderControls.recordingTime}</span>
       <br />
     </div>
   );
