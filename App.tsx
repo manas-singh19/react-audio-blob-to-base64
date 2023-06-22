@@ -36,17 +36,8 @@ export default function App() {
     document.body.appendChild(audio);
   };
 
-  // useEffect(() => {
-  //   let aa = recorderControls.recordingTime;
-  //   if (aa == 5) {
-  //     myInput.current?.focus();
-  //     recorderControls.mediaRecorder;
-  //   } else {
-  //     console.log('still working', recorderControls.recordingTime);
-  //   }
-  // }, [recorderControls.recordingTime]);
-  const [timmer, setTimmer] = useState(0);
-
+  
+  const [timmer, setTimmer] = useState(0); 
   useEffect(() => {
     setTimmer(recorderControls.recordingTime);
     if (timmer == 5) {
