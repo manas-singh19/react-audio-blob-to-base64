@@ -20,7 +20,7 @@ export default function App() {
 
   const addAudioElement = (blob: any) => {
     setURL(blob); // save blob
-
+    console.log(blob);
     // base64 conversion
     reader.readAsDataURL(blob);
     reader.onloadend = function () {
