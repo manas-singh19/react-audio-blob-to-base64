@@ -36,17 +36,13 @@ export default function App() {
     document.body.appendChild(audio);
   };
 
-  
-  const [timmer, setTimmer] = useState(0); 
+  const [timmer, setTimmer] = useState(0);
   useEffect(() => {
     setTimmer(recorderControls.recordingTime);
     if (timmer == 5) {
       console.log('stop here');
       recorderControls.stopRecording();
     }
-    return () => {
-      recorderControls.stopRecording();
-    };
   }, [recorderControls.recordingTime]);
 
   return (
